@@ -1,29 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { CircularProgress } from '@material-ui/core';
 
-import ListDepot from './GetDepot.jsx';
+import ListDepot from './ListDepot.jsx';
 
 const GetDepot = () => {
     const [depot, setDepot] = useState();
-
     useEffect(() => {
-        axios.get('https://jsonplaceholder.typicode.com/todos').then((res) => {
+        axios.get('http://192.168.100.2:9000/depot').then((res) => {
             const responseData = res.data;
             setDepot(responseData);
         })
     }, []);
 
+    // useEffect(() => {
+    //     async function getData() {
+    //         try {
+    //             const response = await axios.get('http://192.168.100.2:9000/depot');
+    //             setDepot(response.data);
+    //         } catch (error) {
+    //             console.error(error);
+    //         }
+    //     }
+    //     getData();
+    // }, []);
+
     return (
-        <>
-            {depot && (
-                <>
+        <React.Fragment>
+            {depot ? (
+                <div id='teste'>
                     {depot.map((dp) => (
                         <ListDepot key={dp.id} dp={dp} />
                     ))}
-                    <p>teste</p>
-                </>
-            )}
-        </>
+                </div> )
+            : <CircularProgress />}
+        </React.Fragment>
     )
 }
 

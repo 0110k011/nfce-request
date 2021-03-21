@@ -5,7 +5,7 @@ import saveDB from './app/savedb.js';
 
 var depotSQL;
 var corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: ['http://192.168.100.2:3000', "http://localhost:3000"],
     optionsSuccessStatus: 200
 };
 
@@ -30,9 +30,9 @@ app.post('/teste', (req,res) => {
 });
 
 app.get('/depot', (req, res) => {
-    // let sql = 'SELECT * FROM depot';
-    // sqlDB(sql).then( result => depotSQL = result );
-    res.send([{id: 1, produto: "EXTR TOMATE PREDILECTA 300GR", qnt: 1, und: "kfa", preco: 1.95}]);
+    let sql = 'SELECT * FROM depot';
+    sqlDB(sql).then( result => depotSQL = result );
+    res.send(depotSQL);
 });
 
 app.listen('9000', () => console.log('Server ON port 9000...'));
