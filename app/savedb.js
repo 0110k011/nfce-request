@@ -46,7 +46,7 @@ function save(urlReq) {
                                         `'${arrayDataName[5]}')`
                                     );
                             }
-                            sql = `INSERT INTO depot VALUES ${products}`;
+                            let sql = `INSERT INTO depot VALUES ${products}`;
                             sqlDB(sql);
                             sql = `INSERT INTO history VALUES ${products}`;
                             sqlDB(sql);
