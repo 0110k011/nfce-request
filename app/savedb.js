@@ -37,7 +37,7 @@ function save(urlReq) {
                             while ((array = regexNFE.exec(bodyNFE)) !== null) {
                                     products.push(
                                         '(NULL,'+
-                                        `'${array[2].split("KG").join("").trim()}',`+
+                                        `'${array[2].split("KG").join("").trim().replace(/\s+/g, " ")}',`+
                                         `${parseFloat(array[3].replace(",", "."))},`+
                                         `'${array[4]}',`+ 
                                         `${parseFloat(array[5].replace(",", "."))},`+
