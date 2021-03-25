@@ -3,16 +3,19 @@ import axios from 'axios';
 
 const sendURL = () => {
     var url = document.getElementById('urlNFC');
-    if (url.value !== '') {
-        axios.post('http://192.168.100.2:9000/addnfc', { url: url.value });
+    var card = document.getElementById('cardNFC');
+    if (url.value !== '' && card.value !== '') {
+        axios.post('http://192.168.100.2:9000/addnfc', { url: url.value, card: card.value });
         url.value = '';
+        card.value = '';
     }
 };
 
 const AddNFC = () => {
     return (
         <div className='AddNFC'>
-            <input id='urlNFC' type='text' size='35' />
+            <input id='urlNFC' type='text' size='31' />
+            <input id='cardNFC' type='text' size='4' />
             <div id='btnNFC' onClick={() => sendURL()}>Add</div>
         </div>
     )    

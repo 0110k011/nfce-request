@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 app.post('/addnfc', (req,res) => {
-    saveDB(req.body.url);
+    saveDB(req.body.url, req.body.card);
 });
 
 app.post('/delid', (req,res) => {

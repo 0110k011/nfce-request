@@ -1,55 +1,30 @@
 import request from 'request';
-import sqlDB from './sqldb.js';
+import requestSave from './requestSave.js'
 
-function save(urlReq) {
+function save(urlReq, cardReq) {
     let url = urlReq.replace("https:","http:"); //Algumas URLs são geradas erroneamente como https, mas a "sefaz" trabalha com http
+    const optionNFE = {
+        uri: url,
+        headers: {
+            'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.110 Safari/537.36',
+            'Connection' : 'Keep-Alive',
+            'Accept'     : '*/*',
+            'cookie'     : ''
+        }
+    };
     request( //Primeira requisição. (Get Cookies)
-        {
-            uri: url,
-            headers: {
-                'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.110 Safari/537.36',
-                'Connection' : 'Keep-Alive',
-                'Accept' : '*/*'
-            }
-        },
+        optionNFE,
         (error, response, body) => {
             const regexVerifNFE = RegExp('i.*?-d.*?n.*\\?.*?=(.*?[^"]+)','g');
             let verifNFE = regexVerifNFE.exec(body);                    
             if (verifNFE) { //Verifica NFE - (PENDENTE DE AUTORIZAÇÂO) 
                 if ((verifNFE[1] == url.slice(57,101)) || (verifNFE[1] == url.slice(59,103))) {
-                    var cookie = response.headers['set-cookie'];
+                    optionNFE.headers['cookie'] = response.headers['set-cookie'];
+                    optionNFE.uri = `http://nfe.sefaz.go.gov.br/nfeweb/sites/nfce/render/NFCe?chNFe=${verifNFE[1]}`
                     request( //Segunda requisição. (Get Data)
-                        {
-                            uri: `http://nfe.sefaz.go.gov.br/nfeweb/sites/nfce/render/NFCe?chNFe=${verifNFE[1]}`,
-                            headers: {
-                                'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.110 Safari/537.36',
-                                'set-cookie' : cookie,
-                                'cookie' : cookie 
-                            }                           
-                        },
-                        (errorNFE, responseNFE, bodyNFE) => {
-                            const regexNFE = RegExp('v-n.*?n>(.*?[^<]+).*?-d.*?n>(.*?[^<]+).*?-q.*?n>(.*?[^<]+).*?-u.*?n>(.*?[^<]+).*?-v.*?n>(.*?[^<]+)','g');
-                            const regexNFEDataName = RegExp('(\\d{2})\\D(\\d{2})\\D(\\d{4}).*?-2.*?>N.*?l<.*?n>(.*?[^<]+).*?>N.*?a<.*?n>(.*?[^<]+)','g');
-                            let array;
-                            var products = [];
-                            let arrayDataName = regexNFEDataName.exec(bodyNFE);
-
-                            while ((array = regexNFE.exec(bodyNFE)) !== null) {
-                                    products.push(
-                                        '(NULL,'+
-                                        `'${array[2].split("KG").join("").trim().replace(/\s+/g, " ")}',`+
-                                        `${parseFloat(array[3].replace(",", "."))},`+
-                                        `'${array[4]}',`+ 
-                                        `${parseFloat(array[5].replace(",", "."))},`+
-                                        `'${arrayDataName[3] + arrayDataName[2] + arrayDataName[1]}',`+
-                                        `'${arrayDataName[4]}',`+
-                                        `'${arrayDataName[5]}')`
-                                    );
-                            }
-                            let sql = `INSERT INTO depot VALUES ${products}`;
-                            sqlDB(sql);
-                            sql = `INSERT INTO history VALUES ${products}`;
-                            sqlDB(sql);
+                        optionNFE,
+                        (errNFE, resNFE, bodyNFE) => {                   
+                            requestSave(bodyNFE, cardReq);
                         }
                     );
                 } else {
@@ -62,8 +37,8 @@ function save(urlReq) {
     ); 
 }
 
-const saveDB = (url) => {
-    return save(url);
+const saveDB = (url, card) => {
+    return save(url, card);
 };
 
 export default saveDB;
