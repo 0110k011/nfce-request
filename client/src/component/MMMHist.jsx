@@ -4,6 +4,7 @@ const MMMHist = (props) => {
     const { mmm } = props;
     let arr = [];
     let sum = 0;
+    let total = 0;
     for (let i = 0; i < mmm.length; i++) {
         if (mmm[i].und === 'KG') {
             arr.push(mmm[i].preco/mmm[i].qnt);
@@ -12,11 +13,13 @@ const MMMHist = (props) => {
             arr.push(mmm[i].preco);
             sum += mmm[i].preco;
         }
+        total += mmm[i].preco;
     }
     return (
         <div className='mmm'>{`Min: ${Math.min(...arr).toFixed(2)} 
             Max: ${Math.max(...arr).toFixed(2)} 
-            Média: ${(sum/mmm.length).toFixed(2)}`}
+            Média: ${(sum/mmm.length).toFixed(2)}
+            Total: ${total.toFixed(2)}`}
         </div>);
 };
 

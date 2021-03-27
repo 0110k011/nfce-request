@@ -7,9 +7,27 @@ const SearchHist = (props) => {
     const { histData } = props;
     const [search, setSearch] = useState('');
 
+    function searchString(strdp, str) {
+        var res = str.toLowerCase().split(' ');
+        var result = strdp.toLowerCase().includes(str.toLowerCase());
+        if (res.length > 1) {
+            for (let i=0; i < res.length; i++) {
+                result = strdp.toLowerCase().includes(res[i].toLowerCase());
+                if (!result) { 
+                    result = false;
+                    break; 
+                };
+            };
+        };
+        return result;
+    }
+
     function searchFilter(dp) {
+        var dataArray = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+        var dataMes = dp.data.replace(/-\d{2}-/g, '-' + dataArray[dp.data.slice(6,7)-1] + '-');
+        var str = `${dp.produto} ${dp.und} ${dataMes} ${dp.card}`;
         if (search === '') return '';
-        else if (dp.produto.toLowerCase().includes(search.toLowerCase())) return dp;
+        else if (searchString(str,search)) return dp;
     }
 
     function searchMap(dp, key) {
