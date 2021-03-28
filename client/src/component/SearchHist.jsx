@@ -24,7 +24,7 @@ const SearchHist = (props) => {
 
     function searchFilter(dp) {
         var dataArray = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-        var dataMes = dp.data.replace(/-\d{2}-/g, '-' + dataArray[dp.data.slice(6,7)-1] + '-');
+        var dataMes = dp.data.slice(0,10).replace(/-\d{2}-/g, '-' + dataArray[dp.data.slice(6,7)-1] + '-');
         var str = `${dp.produto} ${dp.und} ${dataMes} ${dp.card}`;
         if (search === '') return '';
         else if (searchString(str,search)) return dp;
