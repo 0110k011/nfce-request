@@ -8,8 +8,8 @@ const requestSave = (bodyNFE, card) => {
     let arrayDataName = regexNFEDataName.exec(bodyNFE);
     const regexNFE = RegExp('v-n.*?n>(.*?[^<]+).*?-d.*?n>(.*?[^<]+).*?-q.*?n>(.*?[^<]+).*?-u.*?n>(.*?[^<]+).*?-v.*?n>(.*?[^<]+)','g');
     while ((array = regexNFE.exec(bodyNFE)) !== null) {
-        if (parseFloat(array[3].replace(",", ".")) == 1) array4 = 'UN';
-        else array4 = array[4];
+        if (parseFloat(array[3].replace(",", ".")) === parseInt(array[3].replace(",", "."), 10)) array4 = 'UN';
+        else array4 = 'KG';
         products.push(
             '(NULL,'+
             `'${array[2].split("KG").join("").trim().replace(/\s+/g, " ")}',`+

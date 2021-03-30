@@ -42,8 +42,9 @@
 .qt, .un, .value {
     width: 12%;
     text-align: center;
-    padding: 0 5px;
+    padding: 0 4px;
 }
+
 
 .del {
     padding: 0 10px;

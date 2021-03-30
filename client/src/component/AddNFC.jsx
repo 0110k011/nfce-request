@@ -14,7 +14,7 @@ const sendURL = () => {
 const AddNFC = () => {
     return (
         <div className='AddNFC'>
-            <input id='urlNFC' type='text' size='31' />
+            <input id='urlNFC' type='text' size='26' />
             <input id='cardNFC' type='text' size='4' />
             <div id='btnNFC' onClick={() => sendURL()}>Add</div>
         </div>
