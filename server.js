@@ -16,6 +16,21 @@ app.post('/addnfc', (req,res) => {
     saveDB(req.body.url, req.body.card);
 });
 
+app.post('/addmanual', (req,res) => {
+    //saveDB(req.body.url, req.body.card);
+    let sql = '(NULL,'+
+    `'${req.body.prod.toUpperCase()}',`+
+    `${parseFloat(req.body.qnt)},`+
+    `'${req.body.und.toUpperCase()}',`+ 
+    `${parseFloat(req.body.preco.replace(",", "."))},`+
+    `'${req.body.data}',`+
+    `'${req.body.social.toUpperCase()}',`+
+    `'${req.body.social.toUpperCase()}',`+
+    `'ENTRADA MANUAL',`+
+    `'${req.body.card.toUpperCase()}')`
+    console.log(sql);
+});
+
 app.post('/delid', (req,res) => {
     let sql = `DELETE FROM depot WHERE id=${req.body.id}`;
     sqlDB(sql);

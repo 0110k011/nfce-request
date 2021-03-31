@@ -12,11 +12,8 @@ const SearchHist = (props) => {
         var result = strdp.toLowerCase().includes(str.toLowerCase());
         if (res.length > 1) {
             for (let i=0; i < res.length; i++) {
-                result = strdp.toLowerCase().includes(res[i].toLowerCase());
-                if (!result) { 
-                    result = false;
-                    break; 
-                };
+                result = strdp.toLowerCase().includes(res[i].replace(/#.*/g, '').toLowerCase());
+                if (!result || (res[i].includes('#') && strdp.toLowerCase().includes(res[i].replace(/#/g, '').toLowerCase()))) return false;
             };
         };
         return result;
@@ -42,13 +39,13 @@ const SearchHist = (props) => {
     var mapM = histData.filter(searchFilter).map(searchMap);
 
     return (
-        <div>
-            <div className='ter'>
-                <input type='text' placeholder='Search...' onChange={(event) => {
+        <div className='ter'>
+            <div>
+                <input id='inSearch' type='text' placeholder='Search...' size='16' onChange={(event) => {
                     setSearch(event.target.value);
                 }} />
-                {search && (<MMMHist mmm={mapM} />)}
             </div>
+            {search && (<MMMHist mmm={mapM} />)}
             <div className='search-table'>{histData.filter(searchFilter).map((dp, key) => (
                     <SearchList key={key} dp={dp} />
                 ))}

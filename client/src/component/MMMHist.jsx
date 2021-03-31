@@ -16,10 +16,10 @@ const MMMHist = (props) => {
         total += mmm[i].preco;
     }
     return (
-        <div className='mmm'>{`Min: ${Math.min(...arr).toFixed(2)} 
-            Max: ${Math.max(...arr).toFixed(2)} 
-            Média: ${(sum/mmm.length).toFixed(2)}
-            Total: ${total.toFixed(2)}`}
+        <div className='mmm'>{`Mn: `}<strong>{`${Math.min(...arr).toFixed(2)}`}</strong>{` 
+            Mx: `}<strong>{`${Math.max(...arr).toFixed(2)}`}</strong>{` 
+            Md: `}<strong>{`${(sum/mmm.length).toFixed(2)}`}</strong>{`
+            Tt: `}<strong>{`R$${total.toFixed(2)}`}</strong>
         </div>);
 };
 
