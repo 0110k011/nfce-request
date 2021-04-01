@@ -41,7 +41,7 @@ const SearchHist = (props) => {
     return (
         <div className='ter'>
             <div>
-                <input id='inSearch' type='text' placeholder='Search...' size='16' onChange={(event) => {
+                <input id='inSearch' type='text' placeholder='Pesquisar...' size='16' onChange={(event) => {
                     setSearch(event.target.value);
                 }} />
             </div>
