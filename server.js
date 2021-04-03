@@ -17,8 +17,7 @@ app.post('/addnfc', (req,res) => {
 });
 
 app.post('/addmanual', (req,res) => {
-    //saveDB(req.body.url, req.body.card);
-    let sql = '(NULL,'+
+    let sql = 'INSERT INTO history VALUES (NULL,'+
     `'${req.body.prod.toUpperCase()}',`+
     `${parseFloat(req.body.qnt)},`+
     `'${req.body.und.toUpperCase()}',`+ 
@@ -28,7 +27,7 @@ app.post('/addmanual', (req,res) => {
     `'${req.body.social.toUpperCase()}',`+
     `'ENTRADA MANUAL',`+
     `'${req.body.card.toUpperCase()}')`
-    console.log(sql);
+    sqlDB(sql);
 });
 
 app.post('/delid', (req,res) => {
