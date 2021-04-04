@@ -1,10 +1,19 @@
 import React from 'react';
-import axios from 'axios';
 
 const delId = (id) => {
     var row = document.getElementById(id);
-    row.style.display = 'none';
-    axios.post('http://192.168.100.2:9000/delid', { id });
+    let y = 0;
+    if (row.style.backgroundColor === 'red') {
+        let x = document.getElementsByClassName('row');
+        for (let i = 0; i < x.length; i++) {
+            if (x[i].style.backgroundColor === 'red') y++;
+        }
+        if (y <= 1) document.getElementById('commit').style.display = 'none';
+        row.style.backgroundColor = '';
+    } else {
+        row.style.backgroundColor = 'red'
+        document.getElementById('commit').style.display = 'block';
+    }
 };
 
 const ListDepot = (props) => {

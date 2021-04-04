@@ -31,9 +31,9 @@ app.post('/addmanual', (req,res) => {
 });
 
 app.post('/delid', (req,res) => {
-    let sql = `DELETE FROM depot WHERE id=${req.body.id}`;
+    let sql = `DELETE FROM depot WHERE id IN (${req.body.id.replace(',', '')})`;
     sqlDB(sql);
-    console.log(`id ${req.body.id} deletado!`)
+    console.log(`id(s) ${req.body.id} deletado(s)!`)
 });
 
 app.get('/depot', (req, res) => {
