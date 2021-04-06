@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import sqlDB from './app/sqldb.js';
 import saveDB from './app/savedb.js';
+import requestSave from './app/requestSave.js'
 
 var corsOptions = {
     origin: ['http://192.168.100.2:3000', "http://localhost:3000"],
@@ -17,17 +18,7 @@ app.post('/addnfc', (req,res) => {
 });
 
 app.post('/addmanual', (req,res) => {
-    let sql = 'INSERT INTO history VALUES (NULL,'+
-    `'${req.body.prod.toUpperCase()}',`+
-    `${parseFloat(req.body.qnt)},`+
-    `'${req.body.und.toUpperCase()}',`+ 
-    `${parseFloat(req.body.preco.replace(",", "."))},`+
-    `'${req.body.data}',`+
-    `'${req.body.social.toUpperCase()}',`+
-    `'${req.body.social.toUpperCase()}',`+
-    `'ENTRADA MANUAL',`+
-    `'${req.body.card.toUpperCase()}')`
-    sqlDB(sql);
+    requestSave(req.body.prod, req.body.card);
 });
 
 app.post('/delid', (req,res) => {
