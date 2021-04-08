@@ -6,7 +6,7 @@ const requestSave = (bodyNFE, card) => {
     let array3,array4,loopProduct;
     const regexNFEDataName = RegExp('(\\d{2})\\D(\\d{2})\\D(\\d{4}).*?-2.*?>N.*?l<.*?n>(.*?[^<]+).*?>N.*?a<.*?n>(.*?[^<]+).*R-C.*?-a.*?>(.*?[^<]+)','g');
     let arrayDataName = regexNFEDataName.exec(bodyNFE);
-    const regexNFE = RegExp('v-n.*?n>(.*?[^<]+).*?-d.*?n>(.*?[^<]+).*?-q.*?n>(.*?[^<]+).*?-u.*?n>(.*?[^<]+).*?-v.*?n>(.*?[^<]+)','g');
+    const regexNFE = RegExp('v-n.*?n>(.*?)<.*?-d.*?n>(.*?)<.*?-q.*?n>(.*?)<.*?-u.*?n>(.*?)<.*?-v.*?n>(.*?)<','g');
     while ((array = regexNFE.exec(bodyNFE)) !== null) {
         array3 = array[3].replace(",", ".");
         if (parseFloat(array3) === parseInt(array3, 10)) {
