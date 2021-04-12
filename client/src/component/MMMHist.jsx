@@ -15,13 +15,19 @@ const MMMHist = (props) => {
         }
         total += mmm[i].preco;
     }
+    let min = Math.min(...arr);
+    let max = Math.max(...arr);
     return (
-        <div className='mmm'>
-            {`Mn: `}<strong>{`${Math.min(...arr).toFixed(2)} `}</strong>
-            {`Mx: `}<strong>{`${Math.max(...arr).toFixed(2)} `}</strong>
-            {`Md: `}<strong>{`${(sum/mmm.length).toFixed(2)} `}</strong>
-            {`TT: `}<strong><u>{`R$${total.toFixed(2)}`}</u></strong>
-        </div>);
+        <React.Fragment>
+        {mmm.length > 0 ? (
+                <div className='mmm'>
+                    {`Mn: `}<strong title={ mmm[arr.indexOf(min)].fant }>{`${min.toFixed(2)} `}</strong>
+                    {`Mx: `}<strong title={ mmm[arr.indexOf(max)].fant }>{`${max.toFixed(2)} `}</strong>
+                    {`Md: `}<strong>{`${(sum/mmm.length).toFixed(2)} `}</strong>
+                    {`TT: `}<strong><u>{`R$${total.toFixed(2)}`}</u></strong>
+                </div>
+        ) : <> </>}
+        </React.Fragment>);
 };
 
 export default MMMHist;

@@ -32,7 +32,8 @@ const SearchHist = (props) => {
                 produto: dp.produto,
                 preco: dp.preco,
                 und: dp.und,
-                qnt: dp.qnt
+                qnt: dp.qnt,
+                fant: dp.fantasia
             })
     }
 
