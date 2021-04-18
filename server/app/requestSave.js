@@ -20,7 +20,7 @@ const requestSave = (bodyNFE, card) => {
         }
         for (let i=0; i < loopProduct; i++) {
             products.push(
-                '(NULL,'+
+                '(DEFAULT,'+
                 `'${array[2].toUpperCase().split("KG").join("").trim().replace(/\s+/g, " ")}',`+
                 `${array3},`+
                 `'${array4}',`+ 

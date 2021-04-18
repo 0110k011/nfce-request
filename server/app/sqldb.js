@@ -1,25 +1,25 @@
-import mariadb from 'mariadb';
+import pkg from 'pg';
+const { Pool } = pkg;
 
-const pool = mariadb.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
+const pool = new Pool({
+    // host: process.env.DB_HOST,
+    host: '127.0.0.1',//'postgresdb',
+    user: 'postgres',
+    // password: process.env.POSTGRES_PASSWORD,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    connectionLimit: 5
+    port: 5432
 });
 
 async function useDB(sql){
-    let conn;
+    const conn = await pool.connect();
     try {
-        conn = await pool.getConnection();
-        const rows = await conn.query(sql);
-        return rows;
+        const res = await conn.query(sql);
+        return res;
     } catch (err) {
         throw err;
     } finally {
-        if (conn) {
-            await conn.end();
-        }
+        conn.release();    
     }
 }
 
