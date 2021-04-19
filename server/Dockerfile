@@ -1,6 +1,7 @@
-FROM node:14.16.0-alpine
+FROM node
+
 RUN mkdir -p /config /src
-WorkDIR /src
+WORKDIR /src
 COPY package.json /package.json
 COPY package-lock.json /package-lock.json
 RUN npm install

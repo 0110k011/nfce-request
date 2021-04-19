@@ -16,7 +16,6 @@ services:
             SEQ_USER: postgres
             SEQ_PW: example
             PORT: 9000
-            # DATABASE_URL: postgres://postgres:example@db:3211/kb0tdb
         volumes:
             - ./server/node_modules
             - ./server:/src
